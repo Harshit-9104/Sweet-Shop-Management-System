@@ -20,4 +20,34 @@ describe("Sweet Class", () => {
   })
 })
 
+describe("SweetShop Management System", () => {
+  let sweetShop
 
+  beforeEach(() => {
+    sweetShop = new SweetShop()
+  })
+
+  describe("addSweet functionality", () => {
+    test("should add a new sweet successfully", () => {
+      const sweetData = { id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 }
+      const result = sweetShop.addSweet(sweetData)
+
+      expect(result).toBe(true)
+      expect(sweetShop.sweets.length).toBe(1)
+      expect(sweetShop.sweets[0].name).toBe("Kaju Katli")
+    })
+
+    test("should throw error when adding sweet with duplicate ID", () => {
+      const sweetData = { id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 }
+      sweetShop.addSweet(sweetData)
+
+      expect(() => sweetShop.addSweet(sweetData)).toThrow("Sweet with ID 1001 already exists")
+    })
+
+    test("should throw error for invalid sweet data", () => {
+      expect(() => sweetShop.addSweet({})).toThrow("Invalid sweet data")
+    })
+  })
+
+  
+})
