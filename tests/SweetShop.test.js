@@ -68,6 +68,23 @@ describe("SweetShop Management System", () => {
     })
   })
 
+  describe("viewSweets functionality", () => {
+    test("should return empty array when no sweets exist", () => {
+      const sweets = sweetShop.viewSweets()
+      expect(sweets).toEqual([])
+    })
+
+    test("should return all sweets", () => {
+      sweetShop.addSweet({ id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 })
+      sweetShop.addSweet({ id: 1002, name: "Gajar Halwa", category: "Vegetable-Based", price: 30, quantity: 15 })
+
+      const sweets = sweetShop.viewSweets()
+      expect(sweets.length).toBe(2)
+      expect(sweets[0].name).toBe("Kaju Katli")
+      expect(sweets[1].name).toBe("Gajar Halwa")
+    })
+  })
+
 
   
 })
