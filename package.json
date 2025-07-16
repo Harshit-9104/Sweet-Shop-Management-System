@@ -1,0 +1,28 @@
+{
+  "name": "sweet-shop-management",
+  "version": "1.0.0",
+  "description": "A Sweet Shop Management System built with TDD principles",
+  "main": "src/SweetShop.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "start": "node src/index.js",
+    "serve": "node server.js",
+    "dev": "concurrently \"npm run serve\" \"npm run test:watch\"",
+    "build": "echo 'Build completed - static files ready'"
+  },
+  "keywords": ["sweet-shop", "inventory", "tdd", "javascript"],
+  "author": "Developer",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "concurrently": "^7.6.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": ["src/**/*.js", "!src/index.js"]
+  }
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍬 Sweet Shop Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1><i class="fas fa-candy-cane"></i> Sweet Shop Management System</h1>
+            <!-- <p>Manage your sweet inventory with ease</p> -->
+        </header>
+
+        <!-- Navigation -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="inventory">
+                <i class="fas fa-boxes"></i> Inventory
+            </button>
+            <button class="tab-btn" data-tab="add-sweet">
+                <i class="fas fa-plus"></i> Add Sweet
+            </button>
+            <button class="tab-btn" data-tab="search">
+                <i class="fas fa-search"></i> Search
+            </button>
+            <button class="tab-btn" data-tab="transactions">
+                <i class="fas fa-exchange-alt"></i> Transactions
+            </button>
+            <button class="tab-btn" data-tab="stats">
+                <i class="fas fa-chart-bar"></i> Statistics
+            </button>
+        </nav>
+
+        <!-- Inventory Tab -->
+        <div id="inventory" class="tab-content active">
+            <div class="section-header">
+                <h2><i class="fas fa-boxes"></i> Current Inventory</h2>
+                <div class="sort-controls">
+                    <label for="sortBy">Sort by:</label>
+                    <select id="sortBy">
+                        <option value="name">Name</option>
+                        <option value="price">Price</option>
+                        <option value="quantity">Quantity</option>
+                        <option value="category">Category</option>
+                    </select>
+                    <button id="refreshBtn" class="btn btn-secondary">
+                        <i class="fas fa-sync-alt"></i> Refresh
+                    </button>
+                </div>
+            </div>
+            <div id="sweetsList" class="sweets-grid">
+                <!-- Sweets will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Add Sweet Tab -->
+        <div id="add-sweet" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-plus"></i> Add New Sweet</h2>
+            </div>
+            <form id="addSweetForm" class="form-container">
+                <div class="form-group">
+                    <label for="sweetId">Sweet ID:</label>
+                    <input type="number" id="sweetId" required>
+                </div>
+                <div class="form-group">
+                    <label for="sweetName">Name:</label>
+                    <input type="text" id="sweetName" required>
+                </div>
+                <div class="form-group">
+                    <label for="sweetCategory">Category:</label>
+                    <select id="sweetCategory" required>
+                        <option value="">Select Category</option>
+                        <option value="Nut-Based">Nut-Based</option>
+                        <option value="Milk-Based">Milk-Based</option>
+                        <option value="Vegetable-Based">Vegetable-Based</option>
+                        <option value="Syrup-Based">Syrup-Based</option>
+                        <option value="Chocolate-Based">Chocolate-Based</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="sweetPrice">Price (₹):</label>
+                    <input type="number" id="sweetPrice" min="0" step="0.01" required>
+                </div>
+                <div class="form-group">
+                    <label for="sweetQuantity">Quantity:</label>
+                    <input type="number" id="sweetQuantity" min="0" required>
+                </div>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Add Sweet
+                </button>
+            </form>
+        </div>
+
+        <!-- Search Tab -->
+        <div id="search" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-search"></i> Search Sweets</h2>
+            </div>
+            <div class="search-container">
+                <div class="search-form">
+                    <div class="form-group">
+                        <label for="searchName">Search by Name:</label>
+                        <input type="text" id="searchName" placeholder="Enter sweet name">
+                    </div>
+                    <div class="form-group">
+                        <label for="searchCategory">Search by Category:</label>
+                        <select id="searchCategory">
+                            <option value="">All Categories</option>
+                            <option value="Nut-Based">Nut-Based</option>
+                            <option value="Milk-Based">Milk-Based</option>
+                            <option value="Vegetable-Based">Vegetable-Based</option>
+                            <option value="Syrup-Based">Syrup-Based</option>
+                            <option value="Chocolate-Based">Chocolate-Based</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="minPrice">Min Price (₹):</label>
+                        <input type="number" id="minPrice" min="0" step="0.01">
+                    </div>
+                    <div class="form-group">
+                        <label for="maxPrice">Max Price (₹):</label>
+                        <input type="number" id="maxPrice" min="0" step="0.01">
+                    </div>
+                    <button id="searchBtn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Search
+                    </button>
+                    <button id="clearSearchBtn" class="btn btn-secondary">
+                        <i class="fas fa-times"></i> Clear
+                    </button>
+                </div>
+                <div id="searchResults" class="sweets-grid">
+                    <!-- Search results will appear here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div id="transactions" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-exchange-alt"></i> Purchase & Restock</h2>
+            </div>
+            <div class="transaction-container">
+                <div class="transaction-form">
+                    <h3>Quick Transaction</h3>
+                    <div class="form-group">
+                        <label for="transactionId">Sweet ID:</label>
+                        <input type="number" id="transactionId" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="transactionQuantity">Quantity:</label>
+                        <input type="number" id="transactionQuantity" min="1" required>
+                    </div>
+                    <div class="transaction-buttons">
+                        <button id="purchaseBtn" class="btn btn-warning">
+                            <i class="fas fa-shopping-cart"></i> Purchase
+                        </button>
+                        <button id="restockBtn" class="btn btn-success">
+                            <i class="fas fa-plus-circle"></i> Restock
+                        </button>
+                    </div>
+                </div>
+                <div id="transactionHistory" class="transaction-history">
+                    <h3>Recent Transactions</h3>
+                    <div id="transactionList">
+                        <!-- Transaction history will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Tab -->
+        <div id="stats" class="tab-content">
+            <div class="section-header">
+                <h2><i class="fas fa-chart-bar"></i> Statistics & Reports</h2>
+            </div>
+            <div class="stats-container">
+                <div class="stats-cards">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalValue">₹0</h3>
+                            <p>Total Inventory Value</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-boxes"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalItems">0</h3>
+                            <p>Total Items</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="lowStockCount">0</h3>
+                            <p>Low Stock Items</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="low-stock-section">
+                    <h3>Low Stock Alert (< 20 units)</h3>
+                    <div id="lowStockItems" class="low-stock-list">
+                        <!-- Low stock items will appear here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Toast Notifications -->
+        <div id="toast" class="toast"></div>
+
+        <!-- Loading Spinner -->
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
