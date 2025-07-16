@@ -49,5 +49,25 @@ describe("SweetShop Management System", () => {
     })
   })
 
+  describe("deleteSweet functionality", () => {
+    beforeEach(() => {
+      sweetShop.addSweet({ id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 })
+      sweetShop.addSweet({ id: 1002, name: "Gajar Halwa", category: "Vegetable-Based", price: 30, quantity: 15 })
+    })
+
+    test("should delete sweet by ID successfully", () => {
+      const result = sweetShop.deleteSweet(1001)
+
+      expect(result).toBe(true)
+      expect(sweetShop.sweets.length).toBe(1)
+      expect(sweetShop.sweets[0].id).toBe(1002)
+    })
+
+    test("should throw error when deleting non-existent sweet", () => {
+      expect(() => sweetShop.deleteSweet(9999)).toThrow("Sweet with ID 9999 not found")
+    })
+  })
+
+
   
 })
