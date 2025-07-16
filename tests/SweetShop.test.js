@@ -149,6 +149,32 @@ describe("SweetShop Management System", () => {
     })
   })
 
+  describe("purchaseSweet functionality", () => {
+    beforeEach(() => {
+      sweetShop.addSweet({ id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 })
+    })
+
+    test("should purchase sweet successfully", () => {
+      const result = sweetShop.purchaseSweet(1001, 5)
+
+      expect(result).toBe(true)
+      expect(sweetShop.sweets[0].quantity).toBe(15)
+    })
+
+    test("should throw error for insufficient quantity", () => {
+      expect(() => sweetShop.purchaseSweet(1001, 25)).toThrow("Insufficient quantity. Available: 20, Requested: 25")
+    })
+
+    test("should throw error for non-existent sweet", () => {
+      expect(() => sweetShop.purchaseSweet(9999, 5)).toThrow("Sweet with ID 9999 not found")
+    })
+
+    test("should throw error for invalid quantity", () => {
+      expect(() => sweetShop.purchaseSweet(1001, 0)).toThrow("Invalid quantity")
+      expect(() => sweetShop.purchaseSweet(1001, -5)).toThrow("Invalid quantity")
+    })
+  })
+
 
   
 })
