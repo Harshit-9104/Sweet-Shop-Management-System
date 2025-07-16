@@ -175,6 +175,28 @@ describe("SweetShop Management System", () => {
     })
   })
 
+  describe("restockSweet functionality", () => {
+    beforeEach(() => {
+      sweetShop.addSweet({ id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 })
+    })
+
+    test("should restock sweet successfully", () => {
+      const result = sweetShop.restockSweet(1001, 10)
+
+      expect(result).toBe(true)
+      expect(sweetShop.sweets[0].quantity).toBe(30)
+    })
+
+    test("should throw error for non-existent sweet", () => {
+      expect(() => sweetShop.restockSweet(9999, 10)).toThrow("Sweet with ID 9999 not found")
+    })
+
+    test("should throw error for invalid quantity", () => {
+      expect(() => sweetShop.restockSweet(1001, 0)).toThrow("Invalid quantity")
+      expect(() => sweetShop.restockSweet(1001, -5)).toThrow("Invalid quantity")
+    })
+  })
+
 
   
 })
