@@ -116,6 +116,39 @@ describe("SweetShop Management System", () => {
     })
   })
 
+  describe("sortSweets functionality", () => {
+    beforeEach(() => {
+      sweetShop.addSweet({ id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 })
+      sweetShop.addSweet({ id: 1002, name: "Gajar Halwa", category: "Vegetable-Based", price: 30, quantity: 15 })
+      sweetShop.addSweet({ id: 1003, name: "Gulab Jamun", category: "Milk-Based", price: 10, quantity: 50 })
+    })
+
+    test("should sort by name", () => {
+      const sorted = sweetShop.sortSweets("name")
+      expect(sorted[0].name).toBe("Gajar Halwa")
+      expect(sorted[1].name).toBe("Gulab Jamun")
+      expect(sorted[2].name).toBe("Kaju Katli")
+    })
+
+    test("should sort by price", () => {
+      const sorted = sweetShop.sortSweets("price")
+      expect(sorted[0].price).toBe(10)
+      expect(sorted[1].price).toBe(30)
+      expect(sorted[2].price).toBe(50)
+    })
+
+    test("should sort by quantity", () => {
+      const sorted = sweetShop.sortSweets("quantity")
+      expect(sorted[0].quantity).toBe(15)
+      expect(sorted[1].quantity).toBe(20)
+      expect(sorted[2].quantity).toBe(50)
+    })
+
+    test("should throw error for invalid sort field", () => {
+      expect(() => sweetShop.sortSweets("invalid")).toThrow("Invalid sort field")
+    })
+  })
+
 
   
 })
