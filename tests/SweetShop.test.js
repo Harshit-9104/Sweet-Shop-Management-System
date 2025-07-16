@@ -85,6 +85,37 @@ describe("SweetShop Management System", () => {
     })
   })
 
+  describe("searchSweets functionality", () => {
+    beforeEach(() => {
+      sweetShop.addSweet({ id: 1001, name: "Kaju Katli", category: "Nut-Based", price: 50, quantity: 20 })
+      sweetShop.addSweet({ id: 1002, name: "Gajar Halwa", category: "Vegetable-Based", price: 30, quantity: 15 })
+      sweetShop.addSweet({ id: 1003, name: "Gulab Jamun", category: "Milk-Based", price: 10, quantity: 50 })
+    })
+
+    test("should search by name", () => {
+      const results = sweetShop.searchSweets({ name: "Kaju" })
+      expect(results.length).toBe(1)
+      expect(results[0].name).toBe("Kaju Katli")
+    })
+
+    test("should search by category", () => {
+      const results = sweetShop.searchSweets({ category: "Milk-Based" })
+      expect(results.length).toBe(1)
+      expect(results[0].name).toBe("Gulab Jamun")
+    })
+
+    test("should search by price range", () => {
+      const results = sweetShop.searchSweets({ minPrice: 20, maxPrice: 40 })
+      expect(results.length).toBe(1)
+      expect(results[0].name).toBe("Gajar Halwa")
+    })
+
+    test("should return empty array for no matches", () => {
+      const results = sweetShop.searchSweets({ name: "NonExistent" })
+      expect(results).toEqual([])
+    })
+  })
+
 
   
 })
